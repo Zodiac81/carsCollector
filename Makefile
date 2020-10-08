@@ -14,3 +14,7 @@ migrate-refresh:
 	docker-compose exec php php artisan migrate:refresh
 show-containers: #show all working containers
 	@docker ps
+postgres:
+	docker exec -it postgres psql -U root postgres
+seed:
+	@docker-compose exec php php artisan db:seed
