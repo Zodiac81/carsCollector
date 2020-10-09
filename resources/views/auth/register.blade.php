@@ -1,4 +1,4 @@
-@extends('layouts.app', [
+@extends('admin.layouts.app', [
     'class' => 'register-page',
     'backgroundImagePath' => 'img/bg/jan-sendereks.jpg'
 ])

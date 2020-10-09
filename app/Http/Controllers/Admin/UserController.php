@@ -16,6 +16,6 @@ class UserController extends BaseAdminController
      */
     public function index(User $model)
     {
-        return view('users.index', ['users' => $model->paginate(15)]);
+        return view('admin.users.index', ['users' => $model->paginate(15)]);
     }
 }

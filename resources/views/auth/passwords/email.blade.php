@@ -1,4 +1,4 @@
-@extends('layouts.app', [
+@extends('admin.layouts.app', [
     'class' => 'login-page',
     'backgroundImagePath' => 'img/bg/fabio-mangione.jpg'
 ])

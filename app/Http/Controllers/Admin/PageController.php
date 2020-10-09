@@ -24,8 +24,8 @@ class PageController extends BaseAdminController
      */
     public function index(string $page)
     {
-        if (view()->exists("pages.{$page}")) {
-            return view("pages.{$page}");
+        if (view()->exists("admin.pages.{$page}")) {
+            return view("admin.pages.{$page}");
         }
 
         return abort(404);

@@ -21,6 +21,6 @@ class HomeController extends BaseAdminController
      */
     public function index()
     {
-        return view('pages.dashboard');
+        return view('admin.pages.dashboard');
     }
 }

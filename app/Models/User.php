@@ -43,8 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    const USER_ROLES = [
-        'admin' => 'admin',
-        'collector' => 'collector'
-    ];
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
 }
