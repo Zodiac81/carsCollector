@@ -20,7 +20,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2006',
               'finished'=>'2006',
-              'description'=>null,
+              'description'=>'Desert Art',
               'position' => 1,
               'parent_id' => null
           ],
@@ -31,7 +31,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2007',
               'finished'=>'2007',
-              'description'=>null,
+              'description'=>'Supercharged',
               'position' => 2,
               'parent_id' => null
           ],
@@ -42,7 +42,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2008',
               'finished'=>'2008',
-              'description'=>null,
+              'description'=>'World of Cars',
               'position' => 3,
               'parent_id' => null
           ],
@@ -53,7 +53,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2009',
               'finished'=>'2009',
-              'description'=>null,
+              'description'=>'Race O Rama',
               'position' => 4,
               'parent_id' => null
           ],
@@ -64,7 +64,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'expanded',
               'release'=>'2009',
               'finished'=>'2011',
-              'description'=>null,
+              'description'=>'Story Tellers',
               'position' => 5,
               'parent_id' => 19
           ],
@@ -75,7 +75,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'expanded',
               'release'=>'2009',
               'finished'=>'2010',
-              'description'=>null,
+              'description'=>'Cars Toon',
               'position' => 6,
               'parent_id' => 19
           ],
@@ -86,7 +86,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2009',
               'finished'=>'2010',
-              'description'=>null,
+              'description'=>'Final Lap',
               'position' => 7,
               'parent_id' => null
           ],
@@ -97,7 +97,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2012',
               'finished'=>'2012',
-              'description'=>null,
+              'description'=>'Radiator Springs Classic',
               'position' => 8,
               'parent_id' => null
           ],
@@ -108,7 +108,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2011',
               'finished'=>'2012',
-              'description'=>null,
+              'description'=>'Cars 2',
               'position' => 9,
               'parent_id' => null
           ],
@@ -119,7 +119,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2013',
               'finished'=>'2013',
-              'description'=>null,
+              'description'=>'World Grand Prize',
               'position' => 10,
               'parent_id' => null
           ],
@@ -130,7 +130,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2014',
               'finished'=>'2014',
-              'description'=>null,
+              'description'=>'Cars 2014',
               'position' => 11,
               'parent_id' => null
           ],
@@ -141,7 +141,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2015',
               'finished'=>'2015',
-              'description'=>null,
+              'description'=>'Cars 2015',
               'position' => 12,
               'parent_id' => null
           ],
@@ -152,7 +152,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'expanded',
               'release'=>'2017',
               'finished'=>'2017',
-              'description'=>null,
+              'description'=>'Precision Series',
               'position' => 13,
               'parent_id' => 19
           ],
@@ -163,7 +163,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2016',
               'finished'=>'2016',
-              'description'=>null,
+              'description'=>'Cars 2016',
               'position' => 14,
               'parent_id' => null
           ],
@@ -174,7 +174,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2017',
               'finished'=>'2017',
-              'description'=>null,
+              'description'=> 'Cars 2017',
               'position' => 15,
               'parent_id' => null
           ],
@@ -185,7 +185,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2017',
               'finished'=>'2018',
-              'description'=>null,
+              'description'=>'Cars 3',
               'position' => 16,
               'parent_id' => null
           ],
@@ -196,7 +196,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2018',
               'finished'=>'2019',
-              'description'=>null,
+              'description'=>'Cars 2018-2019',
               'position' => 17,
               'parent_id' => null
           ],
@@ -207,7 +207,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'main',
               'release'=>'2019',
               'finished'=>'2020',
-              'description'=>null,
+              'description'=>'Blue Desert Art',
               'position' => 18,
               'parent_id' => null
           ],
@@ -218,7 +218,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'expanded',
               'release' => null,
               'finished'=> null,
-              'description'=>null,
+              'description'=>'Expanded Universe',
               'position' => 19,
               'parent_id' => null
           ],
@@ -229,7 +229,7 @@ class SeriesTableSeeder extends Seeder
               'line' => 'expanded',
               'release' => null,
               'finished'=> null,
-              'description'=>null,
+              'description'=>'Disneyland and Cars Land Exclusives',
               'position' => 20,
               'parent_id' => 19
           ],

@@ -4,7 +4,5 @@
 ])
 
 @section('content')
-
-            <series-list-component></series-list-component>
-
+    <series-list-component></series-list-component>
 @endsection
