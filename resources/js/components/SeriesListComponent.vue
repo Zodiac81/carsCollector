@@ -12,7 +12,7 @@
             <div class="card-header d-flex justify-content-md-between">
                 <h4 class="card-title">Series List</h4>
                 <div class="d-flex justify-content-end">
-                    <b-button @click="$bvModal.show(infoCreateModal.id)" variant="success" class="">
+                    <b-button @click="$bvModal.show(infoCreateModal.id)" variant="success">
                         <i class="nc-icon nc-simple-add"></i>
                     </b-button>
                 </div>
@@ -85,15 +85,17 @@
                         <template #row-details="row">
                             <b-card>
                                 <b-row class="mb-2">
+                                    <b-col sm="3" class="text-sm-right"><b>Reference:</b></b-col>
+                                    <b-col>{{ row.item.reference }}</b-col>
                                     <b-col sm="3" class="text-sm-right"><b>Description:</b></b-col>
-                                    <b-col>{{ row.item.description }}</b-col>
+                                          <b-col v-html="row.item.description"></b-col>
                                 </b-row>
                                 <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
                             </b-card>
                         </template>
 
                         <template #cell(actions)="row">
-                            <b-button variant="info" class="btn-sm">
+                            <b-button @click="$bvModal.show(infoUpdateModal.id)" variant="info" class="btn-sm">
                                 <i class="nc-icon nc-settings"></i>
                             </b-button>
                             <b-button @click="$bvModal.show(infoDeleteModal.id + row.item.id)" variant="danger"
@@ -131,9 +133,16 @@
         <b-modal
             :id="infoCreateModal.id"
             :title="infoCreateModal.title"
-            :ok-title="infoCreateModal.btnTitle"
+            hide-footer
             size="lg">
-            <create-series-form-component></create-series-form-component>
+            <create-series-form-component :id="infoCreateModal.id" @created="setItem" @alert="alertData"></create-series-form-component>
+        </b-modal>
+        <b-modal
+            :id="infoUpdateModal.id"
+            :title="infoUpdateModal.title"
+            hide-footer
+            size="lg">
+            <create-series-form-component :id="infoUpdateModal.id" @created="setItem" @alert="alertData"></create-series-form-component>
         </b-modal>
     </div>
 </template>
@@ -159,7 +168,7 @@ export default {
                     sortable: true
                 },
                 {
-                    key: 'release',
+                    key: 'released',
                     label: 'released',
                     sortable: true,
                 },
@@ -181,6 +190,11 @@ export default {
                 title: 'Add new series',
                 btnTitle: 'Create',
             },
+            infoUpdateModal: {
+                id: 'update-modal',
+                title: 'Update series',
+                btnTitle: 'Update',
+            },
             infoDeleteModal: {
                 id: 'delete-modal-',
                 title: 'Delete ',
@@ -190,9 +204,7 @@ export default {
                 show: false,
                 text: ''
             }
-
         }
-
     },
     computed: {
 
@@ -209,14 +221,16 @@ export default {
         })
     },
     methods: {
-
-        addPhoto(e) {
-            console.log("dispatch the request");
+        setItem(item) {
+            this.series.push(item)
         },
-
         deleteItem(id) {
             axios.delete('api/series/' + id).then(response => {
-               this.alertData('success')
+                this.series = this.series.filter( function(item){
+                   return item.id != response.data.data
+               })
+                this.totalRows = this.series.length
+                this.alertData('success')
             }).catch(error => {
                 this.alertData('danger')
                 console.log('Error : ', error)

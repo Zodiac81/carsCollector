@@ -11,6 +11,7 @@ class Series extends Model
 
     protected $table = 'series';
     protected $guarded =  [];
+    public $timestamps = false;
 
     const PRODUCTION_LINES = ['main', 'expanded'];
 

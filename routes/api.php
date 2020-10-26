@@ -12,4 +12,6 @@ use Illuminate\Support\Facades\Route;
 //
 //});
 
-Route::resource('series', SeriesController::class);
+Route::apiResources([
+    'series' => SeriesController::class
+]);

@@ -1,5 +1,5 @@
 <template>
-    <b-form>
+    <b-form v-on:submit.prevent="submit">
         <b-form-group
             id="input-group-name"
             label="Name"
@@ -40,6 +40,7 @@
                 v-model="form.released"
                 :options="years"
                 :value="null"
+                required
             ></b-form-select>
         </b-form-group>
         <b-form-group
@@ -59,8 +60,12 @@
             label="Series description"
             label-for="cke-editor-description"
         >
-            <ckeditor id="cke-editor-description" :editor="form.cke.editor" v-model="form.cke.editorData"></ckeditor>
+            <ckeditor id="cke-editor-description" :editor="cke.editor" v-model="form.description"></ckeditor>
         </b-form-group>
+        <div class="text-right">
+            <b-btn @click="$bvModal.hide(id)">Cancel</b-btn>
+            <b-btn type="submit" variant="outline-primary">Create</b-btn>
+        </div>
     </b-form>
 
 
@@ -71,12 +76,12 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
     name: "CreateSeriesFormComponent",
+    props: ['id'],
     computed: {
         years() {
             const year = new Date().getFullYear()
-            return Array.from({length: year - 2004}, (value, index) => 2005 + index)
-        },
-
+            return Array.from({length: year - 2000}, (value, index) => 2005 + index)
+        }
     },
     data() {
         return {
@@ -87,19 +92,26 @@ export default {
                 line: '',
                 released: '',
                 finished: '',
-                text: '',
-                cke: {
-                    editor: ClassicEditor,
-                    editorData: '',
-                }
+                description: '',
             },
-
+            cke: {
+                editor: ClassicEditor,
+                editorData: '',
+            }
         }
     },
     methods: {
-        onSubmit(evt) {
-            evt.preventDefault()
-            alert(JSON.stringify(this.form))
+        submit() {
+            axios.post('api/series', this.form)
+            .then( response => {
+                this.$emit('created', response.data.data);
+                this.$emit('alert', 'success');
+                this.$bvModal.hide(this.id)
+            })
+            .catch(error => {
+                this.$emit('alert', 'danger');
+                console.log(error)
+            })
         },
         ucFirstChar(str) {
             return str[0].toUpperCase() + str.slice(1)

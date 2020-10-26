@@ -1,7 +1,5 @@
 <template>
-    <b-alert :show="show" :variant="status" @dismissed="cancelAlertData" dismissible>
-        <p class="">{{ text }}</p>
-    </b-alert>
+    <b-alert :show="show" :variant="status" @dismissed="cancelAlertData" dismissible>{{ text }}</b-alert>
 </template>
 
 <script>
