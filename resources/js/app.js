@@ -8,12 +8,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import CKEditor from '@ckeditor/ckeditor5-vue';
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import Vuelidate from 'vuelidate'
+
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-Vue.use( CKEditor );
+Vue.use( CKEditor )
+Vue.use( Vuelidate )
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,6 +32,7 @@ Vue.use( CKEditor );
 Vue.component('series-list-component', require('./components/SeriesListComponent.vue').default);
 Vue.component('alert-component', require('./components/AlertComponent.vue').default);
 Vue.component('create-series-form-component', require('./components/forms/CreateSeriesFormComponent.vue').default);
+Vue.component('validation-errors-component', require('./components/ValidationErrorsComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

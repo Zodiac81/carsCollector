@@ -25,11 +25,11 @@ class StoreSeriesRequest extends FormRequest
     {
         return [
             'name' => 'string|required|max:255',
-            'reference' => 'nullable|max:255',
-            'line' => 'string',
+            'reference' => 'string|nullable|max:255',
+            'line' => 'string|required',
             'released' => 'required',
             'finished' => 'nullable',
-            'description' => 'nullable|max:4000',
+            'description' => 'nullable|max:4000|string',
         ];
     }
 
@@ -41,6 +41,8 @@ class StoreSeriesRequest extends FormRequest
             'name.max'  => 'A series name must contains no more 255 characters',
             'reference.max'  => 'A series reference must contains no more 255 characters',
             'reference.string'  => 'A series reference must be string type',
+            'released.required'  => 'A series released year is required',
+            'line.required'  => 'A series production line is required',
             'line.string'  => 'A series production line must be string type',
             'description.max'  => 'A series description must contains no more 4000 characters',
 
