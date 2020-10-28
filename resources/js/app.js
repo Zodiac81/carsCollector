@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import Vuelidate from 'vuelidate'
@@ -15,8 +16,8 @@ import Vuelidate from 'vuelidate'
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-Vue.use( CKEditor )
-Vue.use( Vuelidate )
+Vue.use(CKEditor)
+Vue.use(Vuelidate)
 
 /**
  * The following block of code may be used to automatically register your

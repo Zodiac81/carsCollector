@@ -1,7 +1,13 @@
 <template>
     <div>
         <validation-errors-component :errors="backValidationErrors" v-if="backValidationErrors"></validation-errors-component>
-        <b-form v-on:submit.prevent="submit">
+        <b-form @submit.prevent="submit">
+<!--            <pre>-->
+<!--                 {{ $v.form.name }}-->
+<!--                 {{ !$v.form.name.required }}-->
+
+<!--            </pre>-->
+
             <b-form-group
                 id="input-group-name"
                 label="Name"
@@ -9,15 +15,14 @@
             >
                 <b-form-input
                     id="series-name"
-                    v-model="form.name"
+                    v-model.trim="$v.form.name.$model"
                     type="text"
-                    :state="frontValidationErrorsStatuses.name.state"
                     placeholder="Enter series name"
+                    :class="{'is-invalid': $v.form.name.$error}"
                     aria-describedby="series-name-help series-name-feedback"
                 ></b-form-input>
-                <b-form-invalid-feedback id="series-name-feedback">
-                    {{ frontValidationErrorsStatuses.name.text }}
-                </b-form-invalid-feedback>
+                <div class="text-danger" v-if="!$v.form.name.required">Name is required</div>
+                <div class="text-danger" v-if="!$v.form.name.minLength">Name must have at least {{$v.form.name.$params.minLength.min}} letters.</div>
             </b-form-group>
 
             <b-form-group
@@ -89,6 +94,8 @@
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+import { required, minLength } from 'vuelidate/lib/validators'
+
 export default {
     name: "CreateSeriesFormComponent",
     props: ['id'],
@@ -133,24 +140,40 @@ export default {
             }
         }
     },
-    methods: {
-        submit() {
-            let formValidation = this.validateForm()
-            if(formValidation) {
-                axios.post('api/series', this.form)
-                    .then( response => {
-                        this.$emit('created', response.data.data);
-                        this.$emit('alert', 'success');
-                        this.$bvModal.hide(this.id)
-                    })
-                    .catch(error => {
-                        //this.$emit('alert', 'danger');
-                        if (error.response.status === 422){
-                            this.backValidationErrors = error.response.data.errors;
-                        }
-                        console.log(error)
-                    })
+    validations: {
+        form: {
+            name: {
+                required,
+                minLength: minLength(4)
             }
+        }
+
+    },
+    methods: {
+
+        submit() {
+            console.log('$invalid', this.$v.$invalid)
+            if(this.$v.$invalid) {
+                console.log('submit')
+                this.$v.$touch()
+                return
+            }
+            //let formValidation = this.validateForm()
+            // if(formValidation) {
+            //     axios.post('api/series', this.form)
+            //         .then( response => {
+            //             this.$emit('created', response.data.data);
+            //             this.$emit('alert', 'success');
+            //             this.$bvModal.hide(this.id)
+            //         })
+            //         .catch(error => {
+            //             //this.$emit('alert', 'danger');
+            //             if (error.response.status === 422){
+            //                 this.backValidationErrors = error.response.data.errors;
+            //             }
+            //             console.log(error)
+            //         })
+            // }
         },
         ucFirstChar(str) {
             return str[0].toUpperCase() + str.slice(1)
