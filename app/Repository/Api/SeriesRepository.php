@@ -30,6 +30,13 @@ class SeriesRepository
         return Series::create($request);
     }
 
+    public function update(array $request, int $id) :Series
+    {
+        $item = Series::find($id);
+        $item->update($request);
+        return $item;
+    }
+
     /**
      * @param int $id
      * @return bool

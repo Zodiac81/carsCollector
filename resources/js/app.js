@@ -32,7 +32,7 @@ Vue.use(Vuelidate)
 
 Vue.component('series-list-component', require('./components/SeriesListComponent.vue').default);
 Vue.component('alert-component', require('./components/AlertComponent.vue').default);
-Vue.component('create-series-form-component', require('./components/forms/CreateSeriesFormComponent.vue').default);
+Vue.component('series-form-component', require('./components/forms/SeriesFormComponent.vue').default);
 Vue.component('validation-errors-component', require('./components/ValidationErrorsComponent.vue').default);
 
 /**

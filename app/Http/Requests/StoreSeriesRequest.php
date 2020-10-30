@@ -24,12 +24,12 @@ class StoreSeriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required|max:255',
-            'reference' => 'string|nullable|max:255',
+            'name' => 'string|required|min:4|max:255',
+            'reference' => 'string|nullable|min:4|max:255',
             'line' => 'string|required',
             'released' => 'required',
             'finished' => 'nullable',
-            'description' => 'nullable|max:4000|string',
+            'description' => 'nullable|max:1000|string',
         ];
     }
 
@@ -38,13 +38,15 @@ class StoreSeriesRequest extends FormRequest
         return [
             'name.required' => 'A series name is required',
             'name.string'  => 'A series name must be string type',
+            'name.min'  => 'A series name must contains at least 3 characters',
             'name.max'  => 'A series name must contains no more 255 characters',
             'reference.max'  => 'A series reference must contains no more 255 characters',
+            'reference.min'  => 'A series reference must contains at least 3 characters',
             'reference.string'  => 'A series reference must be string type',
             'released.required'  => 'A series released year is required',
             'line.required'  => 'A series production line is required',
             'line.string'  => 'A series production line must be string type',
-            'description.max'  => 'A series description must contains no more 4000 characters',
+            'description.max'  => 'A series description must contains no more 1000 characters',
 
         ];
     }

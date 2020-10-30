@@ -40,7 +40,6 @@ class SeriesController extends BaseApiController
      */
     public function store(StoreSeriesRequest $request)
     {
-       // dd($request->all());
         $storedItem = $this->repository->store($request->validated());
 
         return $storedItem ? response()->json(['status' => 'success', 'msg' => 'data created & stored', 'data' => $storedItem], Response::HTTP_CREATED)
@@ -61,13 +60,15 @@ class SeriesController extends BaseApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StoreSeriesRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(StoreSeriesRequest $request, int $id)
     {
-        //
+        $updateItem = $this->repository->update($request->validated(), $id);
+        return $updateItem ? response()->json(['status' => 'success', 'msg' => 'data updated', 'data' => $updateItem], Response::HTTP_OK)
+            : response()->json(['status' => 'error', 'msg' => 'data doesn`t patch'], Response::HTTP_BAD_REQUEST);
     }
 
     /**

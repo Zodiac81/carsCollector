@@ -2,9 +2,9 @@
     <div class="col-md-12">
 <!--Alert-->
         <alert-component
-            :status="alert.status"
-            :show="alert.show"
-            :text="alert.text"
+            :dismissCountDown="alert.dismissCountDown"
+            :variant = alert.variant
+            :message="alert.message"
             @cancelData="cancelAlertData">
         </alert-component>
 <!--Table-->
@@ -95,9 +95,17 @@
                         </template>
 
                         <template #cell(actions)="row">
-                            <b-button @click="$bvModal.show(infoUpdateModal.id)" variant="info" class="btn-sm">
+                            <b-button @click="$bvModal.show(infoUpdateModal.id + row.item.id)" variant="info" class="btn-sm">
                                 <i class="nc-icon nc-settings"></i>
                             </b-button>
+                            <b-modal
+                                :id="infoUpdateModal.id + row.item.id"
+                                :title="infoUpdateModal.title"
+                                hide-footer
+                                size="lg">
+
+                            <series-form-component :id="infoUpdateModal.id + row.item.id" :data=row.item :edit=true @action="updateItem" @alert="alertData"></series-form-component>
+                            </b-modal>
                             <b-button @click="$bvModal.show(infoDeleteModal.id + row.item.id)" variant="danger"
                                       class="btn-sm">
                                 <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
@@ -118,6 +126,7 @@
                             </b-modal>
                         </template>
                     </b-table>
+
 <!--Pagination-->
                     <b-pagination
                         v-model="currentPage"
@@ -127,6 +136,7 @@
                         align="right"
                     ></b-pagination>
                 </div>
+                <b>Total : {{ series.length }}</b>
             </div>
         </div>
 <!-- Modals -->
@@ -135,14 +145,7 @@
             :title="infoCreateModal.title"
             hide-footer
             size="lg">
-            <create-series-form-component :id="infoCreateModal.id" @created="setItem" @alert="alertData"></create-series-form-component>
-        </b-modal>
-        <b-modal
-            :id="infoUpdateModal.id"
-            :title="infoUpdateModal.title"
-            hide-footer
-            size="lg">
-            <create-series-form-component :id="infoUpdateModal.id" @created="setItem" @alert="alertData"></create-series-form-component>
+            <series-form-component :id="infoCreateModal.id" :edit=false :data={} @action="setItem" @alert="alertData"></series-form-component>
         </b-modal>
     </div>
 </template>
@@ -200,9 +203,10 @@ export default {
                 title: 'Delete ',
             },
             alert: {
-                status: '',
-                show: false,
-                text: ''
+                variant:'',
+                message: '',
+                dismissSecs: 5,
+                dismissCountDown: 0,
             }
         }
     },
@@ -221,8 +225,19 @@ export default {
         })
     },
     methods: {
+        countDownChanged(dismissCountDown) {
+            this.alert.show = dismissCountDown
+        },
         setItem(item) {
             this.series.push(item)
+        },
+        updateItem(item) {
+            this.series = this.series.map(function(i) {
+                if(i.id === item.id) {
+                    return item
+                }
+                return i
+            })
         },
         deleteItem(id) {
             axios.delete('api/series/' + id).then(response => {
@@ -246,9 +261,9 @@ export default {
             this.alert.text = arr[2]
         },
         alertData(data) {
-            this.alert.status = data
-            this.alert.show = true
-            data === 'success' ? this.alert.text = 'Success!' : this.alert.text = 'Error!'
+            this.alert.dismissCountDown = this.alert.dismissSecs
+            this.alert.variant = data
+            data === 'success' ? this.alert.message = 'Success!' : this.alert.message = 'Error!'
         }
     }
 }

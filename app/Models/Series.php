@@ -13,7 +13,9 @@ class Series extends Model
     protected $guarded =  [];
     public $timestamps = false;
 
-    const PRODUCTION_LINES = ['main', 'expanded'];
+    const VALIDATION_RULES = [
+
+    ];
 
 
 }

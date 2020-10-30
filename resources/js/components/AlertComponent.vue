@@ -1,14 +1,27 @@
 <template>
-    <b-alert :show="show" :variant="status" @dismissed="cancelAlertData" dismissible>{{ text }}</b-alert>
+    <div>
+        <b-alert :show="dismissCountDown" :variant="variant" @dismiss-count-down="countDownChanged" dismissible fade>
+            {{ message }}
+        </b-alert>
+    </div>
+
 </template>
 
 <script>
 export default {
     name: "AlertComponent",
-    props: { show: Boolean, text: String, status: String },
+    props: ['show', 'variant', 'message', 'dismissCountDown'],
+    data() {
+        return {
+            dismissCounter: ''
+        }
+    },
     methods: {
         cancelAlertData() {
             this.$emit('cancelData', [this.show=false, this.status='', this.text=''])
+        },
+        countDownChanged(dismissCountDown) {
+            this.dismissCounter = dismissCountDown
         }
     }
 }
