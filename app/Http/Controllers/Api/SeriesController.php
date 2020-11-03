@@ -42,7 +42,7 @@ class SeriesController extends BaseApiController
     {
         $storedItem = $this->repository->store($request->validated());
 
-        return $storedItem ? response()->json(['status' => 'success', 'msg' => 'data created & stored', 'data' => $storedItem], Response::HTTP_CREATED)
+        return $storedItem ? response()->json(['status' => 'success', 'msg' => 'Successfully created & stored', 'data' => $storedItem], Response::HTTP_CREATED)
             : response()->json(['status' => 'error', 'msg' => 'data doesn`t stored'], Response::HTTP_BAD_REQUEST);
     }
 
@@ -67,7 +67,7 @@ class SeriesController extends BaseApiController
     public function update(StoreSeriesRequest $request, int $id)
     {
         $updateItem = $this->repository->update($request->validated(), $id);
-        return $updateItem ? response()->json(['status' => 'success', 'msg' => 'data updated', 'data' => $updateItem], Response::HTTP_OK)
+        return $updateItem ? response()->json(['status' => 'success', 'msg' => 'Successfully updated', 'data' => $updateItem], Response::HTTP_OK)
             : response()->json(['status' => 'error', 'msg' => 'data doesn`t patch'], Response::HTTP_BAD_REQUEST);
     }
 
@@ -80,7 +80,7 @@ class SeriesController extends BaseApiController
     public function destroy(int $id)
     {
         $deletedItem = $this->repository->destroy($id);
-        return $deletedItem ? response()->json(['status' => 'success', 'msg' => 'deleted', 'data' => $id], Response::HTTP_OK)
-            : response()->json(['status' => 'error', 'msg' => 'data doesn`t deleted'], Response::HTTP_BAD_REQUEST);
+        return $deletedItem ? response()->json(['status' => 'success', 'msg' => 'Successfully removed', 'data' => $id], Response::HTTP_OK)
+            : response()->json(['status' => 'error', 'msg' => 'data doesn`t removed'], Response::HTTP_BAD_REQUEST);
     }
 }

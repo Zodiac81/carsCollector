@@ -14,7 +14,7 @@ class SeriesRepository
      */
     public function get()
     {
-        return response()->json(['data' => Series::all()]);
+        return response()->json(['data' => Series::orderBy('position')->get()]);
     }
 
     /**

@@ -4,8 +4,7 @@
         <alert-component
             :dismissCountDown="alert.dismissCountDown"
             :variant = alert.variant
-            :message="alert.message"
-            @cancelData="cancelAlertData">
+            :message="alert.message">
         </alert-component>
 <!--Table-->
         <div class="card">
@@ -245,9 +244,8 @@ export default {
                    return item.id != response.data.data
                })
                 this.totalRows = this.series.length
-                this.alertData('success')
+                this.alertData(response.data.status, response.data.msg)
             }).catch(error => {
-                this.alertData('danger')
                 console.log('Error : ', error)
             })
         },
@@ -255,15 +253,12 @@ export default {
             this.totalRows = filteredItems.length
             this.currentPage = 1
         },
-        cancelAlertData(arr) {
-            this.alert.show = arr[0]
-            this.alert.status = arr[1]
-            this.alert.text = arr[2]
-        },
-        alertData(data) {
+        alertData(status, msg) {
+            const statusSuccess = 'success',
+                  statusError   = 'danger'
             this.alert.dismissCountDown = this.alert.dismissSecs
-            this.alert.variant = data
-            data === 'success' ? this.alert.message = 'Success!' : this.alert.message = 'Error!'
+            status === statusSuccess ? this.alert.variant = status : this.alert.variant = statusError
+            status === statusSuccess ? this.alert.message = msg : this.alert.message = msg
         }
     }
 }

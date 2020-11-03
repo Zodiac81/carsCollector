@@ -17,9 +17,6 @@ export default {
         }
     },
     methods: {
-        cancelAlertData() {
-            this.$emit('cancelData', [this.show=false, this.status='', this.text=''])
-        },
         countDownChanged(dismissCountDown) {
             this.dismissCounter = dismissCountDown
         }

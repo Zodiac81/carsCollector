@@ -2,37 +2,40 @@
     <div>
         <validation-errors-component :errors="backValidationErrors" v-if="backValidationErrors"></validation-errors-component>
         <b-form @submit.prevent="submit">
-            <b-form-group
-                id="input-group-name"
-                label="Name"
-                label-for="series-name"
-            >
-                <b-form-input
-                    id="series-name"
-                    v-model.trim="$v.form.name.$model"
-                    type="text"
-                    placeholder="Enter series name"
-                    :class="{'is-invalid': $v.form.name.$error}"
-                    aria-describedby="series-name-help series-name-feedback"
+            <div class="w-100">
+                <b-form-group
+                    id="input-group-name"
+                    label="Name"
+                    label-for="series-name"
+                >
+                    <b-form-input
+                        id="series-name"
+                        v-model.trim="$v.form.name.$model"
+                        type="text"
+                        placeholder="Enter series name"
+                        :class="{'is-invalid': $v.form.name.$error}"
+                        aria-describedby="series-name-help series-name-feedback"
 
-                ></b-form-input>
-                <div class="text-danger" v-if="!$v.form.name.required">Series name is required</div>
-                <div class="text-danger" v-if="!$v.form.name.minLength">Series name must have at least {{$v.form.name.$params.minLength.min}} characters.</div>
-                <div class="text-danger" v-if="!$v.form.name.maxLength">Series name must have no more {{$v.form.name.$params.maxLength.max}} characters.</div>
-            </b-form-group>
+                    ></b-form-input>
+                    <div class="text-danger" v-if="!$v.form.name.required">Series name is required</div>
+                    <div class="text-danger" v-if="!$v.form.name.minLength">Series name must have at least {{$v.form.name.$params.minLength.min}} characters.</div>
+                    <div class="text-danger" v-if="!$v.form.name.maxLength">Series name must have no more {{$v.form.name.$params.maxLength.max}} characters.</div>
+                </b-form-group>
 
-            <b-form-group
-                id="input-group-reference"
-                label="Series reference"
-                label-for="series-reference"
-            >
-                <b-form-input
-                    id="series-reference"
-                    v-model="form.reference"
-                    type="text"
-                    placeholder="Enter series reference"
-                ></b-form-input>
-            </b-form-group>
+                <b-form-group
+                    id="input-group-reference"
+                    label="Series reference"
+                    label-for="series-reference"
+                >
+                    <b-form-input
+                        id="series-reference"
+                        v-model="form.reference"
+                        type="text"
+                        placeholder="Enter series reference"
+                    ></b-form-input>
+                </b-form-group>
+            </div>
+
             <b-form-group label="Production line">
                 <b-form-radio-group id="radio-group-pr-lines" v-model="$v.form.line.$model" name="radio-pr-lines">
                 <b-form-radio :value="lines[0]">{{ this.ucFirstChar(lines[0]) }}</b-form-radio>
@@ -40,32 +43,35 @@
                     <div class="text-danger" v-if="!$v.form.line.required">Production line is required</div>
                 </b-form-radio-group>
             </b-form-group>
-            <b-form-group
-                id="select-group-release"
-                label="Release year"
-                label-for="release-year">
-                <b-form-select
-                    id="release-year"
-                    class="mb-2 mr-sm-2 mb-sm-0"
-                    v-model="$v.form.released.$model"
-                    :options="years"
-                    :value="null"
-                    :class="{'is-invalid': $v.form.released.$error}"
-                ></b-form-select>
-                <div class="text-danger" v-if="!$v.form.released.required">Release year is required</div>
-            </b-form-group>
-            <b-form-group
-                id="select-group-finished"
-                label="Production stop year"
-                label-for="finished-year">
-                <b-form-select
-                    id="finished-year"
-                    class="mb-2 mr-sm-2 mb-sm-0"
-                    v-model="form.finished"
-                    :options="years"
-                    :value="null"
-                ></b-form-select>
-            </b-form-group>
+            <div class="w-50 d-flex justify-content-between p-2">
+                <b-form-group
+                    id="select-group-release"
+                    label="Release year"
+                    label-for="release-year">
+                    <b-form-select
+                        id="release-year"
+                        class="mb-2 mr-sm-2 mb-sm-0"
+                        v-model="$v.form.released.$model"
+                        :options="years"
+                        :value="null"
+                        :class="{'is-invalid': $v.form.released.$error}"
+                    ></b-form-select>
+                    <div class="text-danger" v-if="!$v.form.released.required">Release year is required</div>
+                </b-form-group>
+                <b-form-group
+                    id="select-group-finished"
+                    label="Production stop year"
+                    label-for="finished-year">
+                    <b-form-select
+                        id="finished-year"
+                        class="mb-2 mr-sm-2 mb-sm-0"
+                        v-model="form.finished"
+                        :options="years"
+                        :value="null"
+                    ></b-form-select>
+                </b-form-group>
+            </div>
+
             <b-form-group
                 id="series-description"
                 label="Series description"
@@ -111,6 +117,7 @@ export default {
                 released: this.data.released || '',
                 finished: this.data.finished || '',
                 description: this.data.description || '',
+                parentCategory: this.data.parent_id || ''
             },
             cke: {
                 editor: ClassicEditor,
@@ -161,7 +168,7 @@ export default {
                     if(response.data.status === 'success') {
                         this.submitStatus = 'PENDING'
                         this.$emit('action', response.data.data);
-                        this.$emit('alert', 'success');
+                        this.$emit('alert', response.data.status, response.data.msg);
                         this.$bvModal.hide(this.id)
                     }
                 })
@@ -177,7 +184,7 @@ export default {
                 .then( response => {
                     this.submitStatus = 'PENDING'
                     this.$emit('action', response.data.data);
-                    this.$emit('alert', 'success');
+                    this.$emit('alert', response.data.status, response.data.msg);
                     this.$bvModal.hide(this.id)
                 })
                 .catch(error => {
