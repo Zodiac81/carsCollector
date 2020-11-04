@@ -10,7 +10,7 @@ class Series extends Model
     use HasFactory;
 
     protected $table = 'series';
-    protected $guarded =  [];
+    protected $guarded =  ['categories'];
     public $timestamps = false;
 
     const VALIDATION_RULES = [
@@ -19,7 +19,7 @@ class Series extends Model
 
     public function categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsToMany(Category::class, 'categories_series', 'series_id', 'category_id');
     }
 
 

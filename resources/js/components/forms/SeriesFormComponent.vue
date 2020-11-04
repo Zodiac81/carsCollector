@@ -21,7 +21,6 @@
                     <div class="text-danger" v-if="!$v.form.name.minLength">Series name must have at least {{$v.form.name.$params.minLength.min}} characters.</div>
                     <div class="text-danger" v-if="!$v.form.name.maxLength">Series name must have no more {{$v.form.name.$params.maxLength.max}} characters.</div>
                 </b-form-group>
-
                 <b-form-group
                     id="input-group-reference"
                     label="Series reference"
@@ -29,10 +28,33 @@
                 >
                     <b-form-input
                         id="series-reference"
-                        v-model="form.reference"
+                        v-model.trim="$v.form.reference.$model"
+                        :class="{'is-invalid': $v.form.reference.$error}"
                         type="text"
                         placeholder="Enter series reference"
                     ></b-form-input>
+                    <div class="text-danger" v-if="!$v.form.reference.minLength">Series reference must have at least {{$v.form.reference.$params.minLength.min}} characters.</div>
+                    <div class="text-danger" v-if="!$v.form.reference.maxLength">Series reference must have no more {{$v.form.reference.$params.maxLength.max}} characters.</div>
+                </b-form-group>
+
+                <b-form-group
+                    id="categories-group"
+                    label="Choose category(ies)"
+                    label-for="select-categories"
+                >
+                    <multiselect
+                        :class="{'is-invalid': $v.form.categories.$error}"
+                        id="select-categories"
+                        v-model="$v.form.categories.$model"
+                        :options="options"
+                        :multiple="true"
+                        track-by="name"
+                        label="name"
+                        name="categories"
+                        placeholder="Choose"
+                    >
+                    </multiselect>
+                    <div class="text-danger" v-if="!$v.form.categories.required">Choose at least one category</div>
                 </b-form-group>
             </div>
 
@@ -43,7 +65,8 @@
                     <div class="text-danger" v-if="!$v.form.line.required">Production line is required</div>
                 </b-form-radio-group>
             </b-form-group>
-            <div class="w-50 d-flex justify-content-between p-2">
+
+            <div class="w-50 d-flex justify-content-between">
                 <b-form-group
                     id="select-group-release"
                     label="Release year"
@@ -71,7 +94,6 @@
                     ></b-form-select>
                 </b-form-group>
             </div>
-
             <b-form-group
                 id="series-description"
                 label="Series description"
@@ -94,21 +116,29 @@
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { required, minLength, maxLength, alphaNum, numeric } from 'vuelidate/lib/validators'
+import Multiselect from 'vue-multiselect'
 
 export default {
     name: "CreateSeriesFormComponent",
     props: ['id', 'data', 'edit'],
+    components: { Multiselect },
     computed: {
         years() {
             const year = new Date().getFullYear()
             return Array.from({length: year - 2000}, (value, index) => 2005 + index)
-        },
-        // nameState() {
-        //     return this.form.name.length > 2 ? true : false
-        // }
+        }
+    },
+    mounted() {
+        axios.get('api/categories').then((response) => {
+            this.options = response.data.data
+        }).catch(error =>{
+            console.log(error)
+        })
     },
     data() {
         return {
+            loading: false,
+            options:[],
             lines: ['main', 'expanded'],
             form: {
                 name: this.data.name || '',
@@ -117,7 +147,8 @@ export default {
                 released: this.data.released || '',
                 finished: this.data.finished || '',
                 description: this.data.description || '',
-                parentCategory: this.data.parent_id || ''
+                parentCategory: this.data.parent_id || '',
+                categories: this.data.categories || '',
             },
             cke: {
                 editor: ClassicEditor,
@@ -134,6 +165,13 @@ export default {
                 required,
                 minLength: minLength(4),
                 maxLength: maxLength(255),
+            },
+            reference: {
+                minLength: minLength(4),
+                maxLength: maxLength(255),
+            },
+            categories: {
+                required
             },
             line: {
                 required
@@ -163,33 +201,35 @@ export default {
         },
 
         create() {
+            this.form.categories = this.form.categories.map(category => category.id)
             axios.post('api/series', this.form)
                 .then( response => {
                     if(response.data.status === 'success') {
                         this.submitStatus = 'PENDING'
                         this.$emit('action', response.data.data);
-                        this.$emit('alert', response.data.status, response.data.msg);
+                        this.$emit('alert', response.data.status, response.data.msg)
                         this.$bvModal.hide(this.id)
                     }
                 })
                 .catch(error => {
                     if (error.response.status === 422){
-                        this.backValidationErrors = error.response.data.errors;
+                        this.backValidationErrors = error.response.data.errors
                     }
                     console.log(error)
                 })
         },
         update(id) {
+            this.form.categories = this.form.categories.map(category => category.id)
             axios.put('api/series/' + id, this.form)
                 .then( response => {
                     this.submitStatus = 'PENDING'
                     this.$emit('action', response.data.data);
-                    this.$emit('alert', response.data.status, response.data.msg);
+                    this.$emit('alert', response.data.status, response.data.msg)
                     this.$bvModal.hide(this.id)
                 })
                 .catch(error => {
-                    if (error.response.status === 422){
-                        this.backValidationErrors = error.response.data.errors;
+                    if (error.response.status >= 400){
+                        this.backValidationErrors = error.response.data.errors
                     }
                     console.log(error)
                 })
@@ -204,5 +244,8 @@ export default {
 }
 #prlines-feedback {
     color: #e3342f !important;
+}
+.is-invalid .multiselect__tags {
+    border-color: #e3342f;
 }
 </style>

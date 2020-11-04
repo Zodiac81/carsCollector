@@ -88,8 +88,15 @@
                                     <b-col>{{ row.item.reference }}</b-col>
                                     <b-col sm="3" class="text-sm-right"><b>Description:</b></b-col>
                                           <b-col v-html="row.item.description"></b-col>
+                                    <b-col sm="3" class="text-sm-right"><b>Parent ID:</b></b-col>
+                                          <b-col v-html="row.item.parent_id"></b-col>
                                 </b-row>
-                                <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
+                                <b-row>
+                                    <b-list-group horizontal>
+                                        <b-list-group-item v-for="category in row.item.categories">{{ category.name }}</b-list-group-item>
+                                    </b-list-group>
+
+                                </b-row>
                             </b-card>
                         </template>
 
@@ -231,6 +238,7 @@ export default {
             this.series.push(item)
         },
         updateItem(item) {
+            console.log(item)
             this.series = this.series.map(function(i) {
                 if(i.id === item.id) {
                     return item

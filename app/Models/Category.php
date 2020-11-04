@@ -25,5 +25,10 @@ class Category extends Model
         'disneyland' => 'Disneyland and Disney World',
         'carsLand' => 'Cars Land',
     ];
+
+    public function series()
+    {
+        return $this->belongsToMany(Category::class, 'categories_series','category_id', 'series_id');
+    }
 }
 

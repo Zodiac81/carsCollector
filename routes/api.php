@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\SeriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::apiResources([
-    'series' => SeriesController::class
+    'series' => SeriesController::class,
+    'categories' => CategoryController::class,
 ]);
