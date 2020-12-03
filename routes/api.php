@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 //
 //});
 
-Route::apiResources([
-    'series' => SeriesController::class,
-    'categories' => CategoryController::class,
-]);
+Route::group([], function(){
+    Route::apiResources([
+        'series' => SeriesController::class,
+        'categories' => CategoryController::class,
+    ]);
+});
+

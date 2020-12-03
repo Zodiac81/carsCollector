@@ -4,6 +4,6 @@
 ])
 
 @section('content')
-   Categories
+   <categories-list-component></categories-list-component>
 @endsection
 

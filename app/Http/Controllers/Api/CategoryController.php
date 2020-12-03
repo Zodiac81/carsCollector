@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Repositories\Category\ICategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends BaseApiController
@@ -13,8 +14,9 @@ class CategoryController extends BaseApiController
     /**
      * CategoryController constructor.
      */
-    public function __construct()
+    public function __construct(ICategory $repository)
     {
+        $this->repository = $repository;
     }
 
     /**
@@ -24,7 +26,7 @@ class CategoryController extends BaseApiController
      */
     public function index()
     {
-        return response()->json(['data' => Category::select('id', 'name')->get()]);
+        return $this->repository->getAll();
     }
 
     /**

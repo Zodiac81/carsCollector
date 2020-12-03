@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Models\Series;
 
+use App\Repositories\Series\ISeries;
 use App\Repositories\Series\SeriesRepository;
 use Illuminate\Http\Response;
 
@@ -14,10 +15,11 @@ class SeriesController extends BaseApiController
 
     /**
      * SeriesController constructor.
+     * @param ISeries $repository
      */
-    public function __construct()
+    public function __construct(ISeries $repository)
     {
-        $this->repository = new SeriesRepository();
+        $this->repository =$repository;
     }
 
     /**

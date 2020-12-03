@@ -10,7 +10,7 @@
         <!--Table-->
         <div class="card">
             <div class="card-header d-flex justify-content-md-between">
-                <h4 class="card-title">Series List</h4>
+                <h4 class="card-title">Series</h4>
                 <div class="d-flex justify-content-end">
                     <b-button @click="$bvModal.show(infoCreateModal.id)" variant="success">
                         <i class="nc-icon nc-simple-add"></i>
@@ -212,7 +212,7 @@ export default {
         // }
     },
     mounted() {
-        axios.get('api/series').then((response) => {
+        axios.get('api/v1/series').then((response) => {
             this.series = response.data.data
             this.totalRows = this.series.length
         }).catch(error => {
