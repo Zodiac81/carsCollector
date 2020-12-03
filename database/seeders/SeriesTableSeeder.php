@@ -66,7 +66,7 @@ class SeriesTableSeeder extends Seeder
               'finished'=>2011,
               'description'=>'Story Tellers',
               'position' => 5,
-              'parent_id' => 19
+              'parent_id' => 20
           ],
 
           [
@@ -77,7 +77,7 @@ class SeriesTableSeeder extends Seeder
               'finished'=>2010,
               'description'=>'Cars Toon',
               'position' => 6,
-              'parent_id' => 19
+              'parent_id' => 20
           ],
 
           [
@@ -154,7 +154,7 @@ class SeriesTableSeeder extends Seeder
               'finished'=>2017,
               'description'=>'Precision Series',
               'position' => 13,
-              'parent_id' => 19
+              'parent_id' => 20
           ],
 
           [
@@ -212,6 +212,17 @@ class SeriesTableSeeder extends Seeder
               'parent_id' => null
           ],
 
+            [
+              'name' => 'Cars 2021',
+              'reference' => 'cars_2021',
+              'line' => 'main',
+              'released'=>2020,
+              'finished'=>null,
+              'description'=>'Cars 2021 description',
+              'position' => 19,
+              'parent_id' => null
+          ],
+
           [
               'name' => 'Expanded Universe',
               'reference' => 'expanded_universe',
@@ -219,7 +230,7 @@ class SeriesTableSeeder extends Seeder
               'released' => null,
               'finished'=> null,
               'description'=>'Expanded Universe',
-              'position' => 19,
+              'position' => 20,
               'parent_id' => null
           ],
 
@@ -230,8 +241,8 @@ class SeriesTableSeeder extends Seeder
               'released' => null,
               'finished'=> null,
               'description'=>'Disneyland and Cars Land Exclusives',
-              'position' => 20,
-              'parent_id' => 19
+              'position' => 21,
+              'parent_id' => 20
           ],
 
       ]);

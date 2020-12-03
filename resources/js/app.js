@@ -32,7 +32,8 @@ Vue.use(Vuelidate)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('series-list-component', require('./components/SeriesListComponent.vue').default);
+Vue.component('series-list-component', require('./components/series/SeriesListComponent.vue').default);
+Vue.component('series-details-component', require('./components/series/SeriesDetailsComponent').default);
 Vue.component('alert-component', require('./components/AlertComponent.vue').default);
 Vue.component('series-form-component', require('./components/forms/SeriesFormComponent.vue').default);
 Vue.component('validation-errors-component', require('./components/ValidationErrorsComponent.vue').default);

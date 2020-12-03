@@ -204,10 +204,10 @@ export default {
             this.form.categories = this.form.categories.map(category => category.id)
             axios.post('api/series', this.form)
                 .then( response => {
-                    if(response.data.status === 'success') {
+                    if(response.status === 201) {
                         this.submitStatus = 'PENDING'
                         this.$emit('action', response.data.data);
-                        this.$emit('alert', response.data.status, response.data.msg)
+                        this.$emit('alert', response.statusText, response.data.msg)
                         this.$bvModal.hide(this.id)
                     }
                 })
@@ -222,10 +222,13 @@ export default {
             this.form.categories = this.form.categories.map(category => category.id)
             axios.put('api/series/' + id, this.form)
                 .then( response => {
-                    this.submitStatus = 'PENDING'
-                    this.$emit('action', response.data.data);
-                    this.$emit('alert', response.data.status, response.data.msg)
-                    this.$bvModal.hide(this.id)
+                    if(response.status === 200) {
+                        this.submitStatus = 'PENDING'
+                        this.$emit('action', response.data.data);
+                        this.$emit('alert', response.statusText, response.data.msg)
+                        this.$bvModal.hide(this.id)
+                    }
+
                 })
                 .catch(error => {
                     if (error.response.status >= 400){
