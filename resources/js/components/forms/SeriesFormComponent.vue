@@ -129,7 +129,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('api/categories').then((response) => {
+        axios.get('api/v1/categories').then((response) => {
             this.options = response.data.data
         }).catch(error =>{
             console.log(error)
@@ -202,7 +202,7 @@ export default {
 
         create() {
             this.form.categories = this.form.categories.map(category => category.id)
-            axios.post('api/series', this.form)
+            axios.post('api/v1/series', this.form)
                 .then( response => {
                     if(response.status === 201) {
                         this.submitStatus = 'PENDING'
@@ -220,7 +220,7 @@ export default {
         },
         update(id) {
             this.form.categories = this.form.categories.map(category => category.id)
-            axios.put('api/series/' + id, this.form)
+            axios.put('api/v1/series/' + id, this.form)
                 .then( response => {
                     if(response.status === 200) {
                         this.submitStatus = 'PENDING'

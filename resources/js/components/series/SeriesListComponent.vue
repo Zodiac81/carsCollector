@@ -8,7 +8,7 @@
             @dismisse="alert.dismissCountDown=0">
         </alert-component>
         <!--Table-->
-        <div class="card">
+        <div class="card w-75">
             <div class="card-header d-flex justify-content-md-between">
                 <h4 class="card-title">Series</h4>
                 <div class="d-flex justify-content-end">
@@ -35,13 +35,13 @@
                                         v-model="perPage"
                                         id="perPageSelect"
                                         size="sm"
-                                        class="w-25"
+                                        class="w-50"
                                         :options="pageOptions"
                                     ></b-form-select>
                                 </b-form-group>
                             </b-col>
 
-                            <b-col lg="4" class="my-1">
+                            <b-col lg="4" class="my-1 p-0">
                                 <b-form-group>
                                     <b-input-group size="sm">
                                         <b-form-input
@@ -76,6 +76,7 @@
                         @filtered="onFiltered"
                         responsive="sm"
                         sort-icon-left
+                        fixed
                     >
                         <template #cell(show_details)="row">
                             <b-button size="sm" @click="row.toggleDetails" class="mr-2">
@@ -85,7 +86,7 @@
                         <template #row-details="row">
                             <series-details-component :series-data="row.item"></series-details-component>
                         </template>
-
+//UPDATE
                         <template #cell(actions)="row">
                             <b-button @click="$bvModal.show(infoUpdateModal.id + row.item.id)" variant="info"
                                       class="btn-sm">
@@ -120,17 +121,20 @@
                             </b-modal>
                         </template>
                     </b-table>
+                    <div class="d-flex justify-content-between">
+                        <b>Total : {{ series.length }}</b>
+                        <!--Pagination-->
+                        <b-pagination
+                            v-model="currentPage"
+                            :total-rows="totalRows"
+                            :per-page="perPage"
+                            aria-controls="series-table"
+                            align="right"
+                        ></b-pagination>
+                    </div>
 
-                    <!--Pagination-->
-                    <b-pagination
-                        v-model="currentPage"
-                        :total-rows="totalRows"
-                        :per-page="perPage"
-                        aria-controls="series-table"
-                        align="right"
-                    ></b-pagination>
                 </div>
-                <b>Total : {{ series.length }}</b>
+
             </div>
         </div>
         <!-- Modals -->
@@ -163,20 +167,33 @@ export default {
                 {
                     key: 'line',
                     label: 'line',
-                    sortable: true
+                    sortable: true,
+
                 },
                 {
                     key: 'released',
                     label: 'released',
                     sortable: true,
+
                 },
                 {
                     key: 'finished',
                     label: 'finished',
                     sortable: true,
+
                 },
-                {key: 'show_details', label: 'show details', sortable: false},
-                {key: 'actions', label: 'actions', sortable: false}
+                {
+                    key: 'show_details',
+                    label: 'show details',
+                    sortable: false,
+
+                },
+                {
+                    key: 'actions',
+                    label: 'actions',
+                    sortable: false,
+
+                }
             ],
             pageOptions: [5, 10, 15, 20],
             sortBy: 'line',
@@ -232,7 +249,7 @@ export default {
             })
         },
         deleteItem(id) {
-            axios.delete('api/series/' + id)
+            axios.delete('api/v1/series/' + id)
                 .then(response => {
                     this.series = this.series.filter(function (item) {
                         return item.id !== response.data.data

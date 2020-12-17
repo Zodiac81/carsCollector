@@ -4,14 +4,21 @@
 namespace App\Repositories\Category;
 
 
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 
 class CategoryRepository implements ICategory
 {
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getAll()
     {
-        return response()->json(['data' => Category::orderBy('id')->with('series')->get()]);
+        return response()->json(['data' => Category::orderBy('name', 'asc')
+            ->with('series')
+            ->get()]
+        );
     }
 
     public function getById(int $itemId)
@@ -19,18 +26,30 @@ class CategoryRepository implements ICategory
         // TODO: Implement getById() method.
     }
 
-    public function saveItem(array $itemData)
+    /**
+     * @param array $itemData
+     * @return CategoryResource
+     */
+    public function saveItem(array $itemData): CategoryResource
     {
-        // TODO: Implement saveItem() method.
+        $createdItem =  Category::create($itemData);
+        return new CategoryResource($createdItem);
     }
 
     public function editItem(array $itemData, Category $item)
     {
-        // TODO: Implement editItem() method.
+        $item->update($itemData);
+        return new CategoryResource($item);
     }
 
-    public function deleteItem(Category $item)
+    /**
+     * @param Category $item
+     * @return Category
+     * @throws \Exception
+     */
+    public function deleteItem(Category $item) :Category
     {
-        // TODO: Implement deleteItem() method.
+        $item->delete();
+        return $item;
     }
 }

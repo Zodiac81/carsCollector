@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Repositories\Category\ICategory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CategoryController extends BaseApiController
 {
@@ -22,9 +24,9 @@ class CategoryController extends BaseApiController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return $this->repository->getAll();
     }
@@ -32,12 +34,15 @@ class CategoryController extends BaseApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CategoryRequest $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request) :JsonResponse
     {
-        //
+        $storedItem = $this->repository->saveItem($request->validated());
+        return $storedItem ?
+            $this->success('Successfully created & stored', $storedItem, Response::HTTP_CREATED) :
+            $this->error();
     }
 
     /**
@@ -54,23 +59,29 @@ class CategoryController extends BaseApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param CategoryRequest $request
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, Category $category) :JsonResponse
     {
-        //
+        $updateItem = $this->repository->editItem($request->validated(), $category);
+        return $updateItem ?
+            $this->success('Successfully updated', $updateItem, Response::HTTP_OK) :
+            $this->error();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Category $category) :JsonResponse
     {
-        //
+        $deletedItem = $this->repository->deleteItem($category);
+        return $deletedItem ?
+            $this->success('Successfully deleted', $deletedItem->id, Response::HTTP_OK) :
+            $this->error();
     }
 }

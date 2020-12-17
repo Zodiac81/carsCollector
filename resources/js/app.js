@@ -38,6 +38,7 @@ Vue.component('alert-component', require('./components/AlertComponent.vue').defa
 Vue.component('series-form-component', require('./components/forms/SeriesFormComponent.vue').default);
 Vue.component('validation-errors-component', require('./components/ValidationErrorsComponent.vue').default);
 Vue.component('categories-list-component', require('./components/category/CategoriesListComponent.vue').default);
+Vue.component('category-form-component', require('./components/forms/CategoryFormComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

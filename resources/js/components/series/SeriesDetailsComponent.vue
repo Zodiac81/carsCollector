@@ -2,19 +2,19 @@
     <b-card>
         <b-row class="mb-2">
             <b-col sm="3" class="text-sm-left">
-                <b>Reference:</b> {{ seriesData.reference }}
+                <b>Reference :</b> {{ seriesData.reference }}
             </b-col>
             <b-col sm="3" class="text-sm-left">
-                <b>Description:</b> <span v-html="seriesData.description"></span>
+                <b>Description :</b> <span v-html="seriesData.description"></span>
             </b-col>
 
             <b-col sm="3" class="text-sm-left">
-                <b>Parent ID:</b> {{ seriesData.parent_id ? seriesData.parent_id : '-' }}
+                <b>Parent ID :</b> {{ seriesData.parent_id ? seriesData.parent_id : '-' }}
             </b-col>
         </b-row>
         <b-row class="mb-2">
             <b-col sm="3" class="text-sm-left">
-                <b>Categories:</b>
+                <b>Categories :</b>
             </b-col>
         </b-row>
         <b-row>
