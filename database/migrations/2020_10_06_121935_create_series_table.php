@@ -17,11 +17,11 @@ class CreateSeriesTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('reference', 255);
-            $table->string('line',255)->default('main');
-            $table->year('release')->nullable();
+            $table->string('line',255);
+            $table->year('released')->nullable();
             $table->year('finished')->nullable();
             $table->longText('description')->nullable();
-            $table->integer('position')->nullable();
+            $table->integer('position')->unsigned()->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
         });
     }

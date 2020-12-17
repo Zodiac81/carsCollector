@@ -30,6 +30,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <!-- CSS Files -->
 <link href="{{ asset('assets/paper/css/bootstrap.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/paper/css/paper-dashboard.css?v=2.0.0') }}" rel="stylesheet" />
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="{{ asset('assets/paper/demo/demo.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/vue-multiselect.min.css') }}" rel="stylesheet" />

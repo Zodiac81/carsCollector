@@ -12,7 +12,7 @@ RUN apt-get update -qq\
 && apt-get install -y libzip-dev apt-utils curl nano \
 && pecl install xdebug \
 
-RUN docker-php-ext-install zip
+RUN docker-php-ext-install zip unzip
 RUN docker-php-ext-enable apcu
 
 RUN dpkg --add-architecture i386
@@ -30,6 +30,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 EXPOSE 9000
 
 WORKDIR /var/www/html/
+
+RUN chmod +x /var/www/html/
+
 
 
 
