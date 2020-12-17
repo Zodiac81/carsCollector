@@ -30,18 +30,22 @@ class StoreSeriesRequest extends FormRequest
             'released' => 'required',
             'finished' => 'nullable',
             'description' => 'nullable|max:1000|string',
+            'categories' => 'required|array|exists:categories,id',
+            'position' => 'nullable',
+            'parent_id' => 'nullable',
         ];
     }
 
     public function messages()
     {
         return [
+            'categories.required' => 'At least one category is required',
             'name.required' => 'A series name is required',
             'name.string'  => 'A series name must be string type',
-            'name.min'  => 'A series name must contains at least 3 characters',
+            'name.min'  => 'A series name must contains at least 4 characters',
             'name.max'  => 'A series name must contains no more 255 characters',
             'reference.max'  => 'A series reference must contains no more 255 characters',
-            'reference.min'  => 'A series reference must contains at least 3 characters',
+            'reference.min'  => 'A series reference must contains at least 4 characters',
             'reference.string'  => 'A series reference must be string type',
             'released.required'  => 'A series released year is required',
             'line.required'  => 'A series production line is required',

@@ -18,3 +18,5 @@ postgres:
 	docker exec -it postgres psql -U root postgres
 seed:
 	@docker-compose exec php php artisan db:seed
+test:
+	docker-compose exec php php artisan test

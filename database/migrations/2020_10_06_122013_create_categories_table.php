@@ -17,8 +17,6 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->longText('description')->nullable();
-            $table->text('exclusive')->nullable();
-            $table->integer('position')->unsigned()->nullable();
         });
     }
 

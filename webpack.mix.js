@@ -18,3 +18,4 @@ mix.js('resources/js/app.js', 'public/assets/js')
 // mix.setResourceRoot('/assets/');
 
 mix.copyDirectory('resources/images', 'public/assets/images');
+mix.copy('node_modules/vue-multiselect/dist/vue-multiselect.min.css', 'public/assets/css/vue-multiselect.min.css');

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Models\Series;
-use App\Repository\Api\SeriesRepository;
-use Illuminate\Http\Request;
+
+use App\Repositories\Series\ISeries;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class SeriesController extends BaseApiController
@@ -15,72 +15,63 @@ class SeriesController extends BaseApiController
 
     /**
      * SeriesController constructor.
+     * @param ISeries $repository
      */
-    public function __construct()
+    public function __construct(ISeries $repository)
     {
-        $this->repository = new SeriesRepository();
+        $this->repository =$repository;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @param SeriesRepository $seriesRepository
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
-        return $this->repository->get();
+        return $this->repository->getAll();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param StoreSeriesRequest $request
+     * @return JsonResponse
      */
     public function store(StoreSeriesRequest $request)
     {
-        $storedItem = $this->repository->store($request->validated());
-
-        return $storedItem ? response()->json(['status' => 'success', 'msg' => 'Successfully created & stored', 'data' => $storedItem], Response::HTTP_CREATED)
-            : response()->json(['status' => 'error', 'msg' => 'data doesn`t stored'], Response::HTTP_BAD_REQUEST);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $storedItem = $this->repository->saveItem($request->validated());
+        return $storedItem ?
+            $this->success('Successfully created & stored', $storedItem, Response::HTTP_CREATED) :
+            $this->error();
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param StoreSeriesRequest $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Series $series
+     * @return JsonResponse
      */
-    public function update(StoreSeriesRequest $request, int $id)
+    public function update(StoreSeriesRequest $request, Series $series): JsonResponse
     {
-        $updateItem = $this->repository->update($request->validated(), $id);
-        return $updateItem ? response()->json(['status' => 'success', 'msg' => 'Successfully updated', 'data' => $updateItem], Response::HTTP_OK)
-            : response()->json(['status' => 'error', 'msg' => 'data doesn`t patch'], Response::HTTP_BAD_REQUEST);
+        $updateItem = $this->repository->editItem($request->validated(), $series);
+        return $updateItem ?
+            $this->success('Successfully updated', $updateItem, Response::HTTP_OK) :
+            $this->error();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Series $series
+     * @return JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Series $series) :JsonResponse
     {
-        $deletedItem = $this->repository->destroy($id);
-        return $deletedItem ? response()->json(['status' => 'success', 'msg' => 'Successfully removed', 'data' => $id], Response::HTTP_OK)
-            : response()->json(['status' => 'error', 'msg' => 'data doesn`t removed'], Response::HTTP_BAD_REQUEST);
+        $deletedItem = $this->repository->deleteItem($series);
+        return $deletedItem ? $this->success('Successfully deleted', $deletedItem->id, Response::HTTP_OK) :
+            $this->error();
     }
 }
