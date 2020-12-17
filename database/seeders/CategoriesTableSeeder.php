@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class CategoriesTableSeeder extends Seeder
@@ -73,34 +74,34 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Movie Doubles',
-                'exclusive' => 5,
+                'exclusive' => Category::EXCLUSIVES['toysRus'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Easter Egg',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
             [
                 'title' => 'Stocking Stuffer',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Halloween package',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Christmas Ornament Globe',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
@@ -114,21 +115,21 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Dinoco 400',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Walmart 8',
-                'exclusive' => 2,
+                'exclusive' => Category::EXCLUSIVES['walmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => '10-Car Value Pack',
-                'exclusive' => 3,
+                'exclusive' => Category::EXCLUSIVES['samsClub'],
                 'description' => null,
                 'position' => null
             ],
@@ -177,42 +178,42 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Cars Collector\'s Event',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #2',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #3',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #4',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #5',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #6',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
@@ -233,7 +234,7 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Holiday Special!',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
@@ -254,14 +255,14 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Race & Chase',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Pit Race-Off',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
@@ -269,21 +270,21 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Sidewall Shine',
-                'exclusive' => 5,
+                'exclusive' => Category::EXCLUSIVES['toysRus'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'N2O Cola',
-                'exclusive' => 6,
+                'exclusive' => Category::EXCLUSIVES['ukFauxWheel'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Faux Wheel Drive',
-                'exclusive' => 7,
+                'exclusive' => Category::EXCLUSIVES['ukFauxWheelPromotion'],
                 'description' => null,
                 'position' => null
             ],
@@ -353,42 +354,42 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Piston Cup Racer "Team" Packs',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Piston Cup Nights',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Piston Cup Racer "Piston Cup Nights" "Team" Packs',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Barry Diesel',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Motor Speedway of the South',
-                'exclusive' => 9,
+                'exclusive' => Category::EXCLUSIVES['mattel'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Toys "R" Us Gift Packs',
-                'exclusive' => 5,
+                'exclusive' => Category::EXCLUSIVES['toysRus'],
                 'description' => null,
                 'position' => null
             ],
@@ -416,7 +417,7 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Piston Cup Racer "Piston Cup Nights" "Crew" Packs',
-                'exclusive' => 1,
+                'exclusive' => Category::EXCLUSIVES['target'],
                 'description' => null,
                 'position' => null
             ],
@@ -466,14 +467,14 @@ class CategoriesTableSeeder extends Seeder
 //Disney worlds
             [
                 'title' => 'Disneyland and Disney World',
-                'exclusive' => 11,
+                'exclusive' => Category::EXCLUSIVES['disneyland'],
                 'description' => 'These were released in spring 2011',
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Land',
-                'exclusive' => 12,
+                'exclusive' => Category::EXCLUSIVES['carsLand'],
                 'description' => 'In 2012, 5 die-casts of characters from Cars Land were released. Than in 2017, 5 more die-casts were released of Luigi\'s cousins',
                 'position' => null
             ],
@@ -578,14 +579,14 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => 'Mater\'s Secret Mission',
-                'exclusive' => 2,
+                'exclusive' => Category::EXCLUSIVES['walmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Pit Crew 2-Packs',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
@@ -613,49 +614,49 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'title' => '5-Packs',
-                'exclusive' => 5,
+                'exclusive' => Category::EXCLUSIVES['toysRus'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Collect & Connect Puzzles',
-                'exclusive' => 5,
+                'exclusive' => Category::EXCLUSIVES['toysRus'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #7',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #8',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #9',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Cars Collector\'s Event #10',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],
 
             [
                 'title' => 'Muggsy Liftsome & RS John Lassetire Promotion',
-                'exclusive' => 4,
+                'exclusive' => Category::EXCLUSIVES['kmart'],
                 'description' => null,
                 'position' => null
             ],

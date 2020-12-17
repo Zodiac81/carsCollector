@@ -11,6 +11,16 @@ class Series extends Model
 
     protected $table = 'series';
     protected $guarded =  [];
+    public $timestamps = false;
+
+    const VALIDATION_RULES = [
+
+    ];
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 
 
 }

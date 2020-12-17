@@ -23,6 +23,12 @@
                     <p>{{ __('Series') }}</p>
                 </a>
             </li>
+            <li class="{{ $elementActive == 'categories' ? 'active' : '' }}">
+                <a href="{{ route('page.index', 'categories') }}">
+                    <i class="nc-icon nc-bullet-list-67"></i>
+                    <p>{{ __('Categories') }}</p>
+                </a>
+            </li>
             <li class="{{ $elementActive == 'user' || $elementActive == 'profile' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="true" href="#users">
                     <i class="nc-icon"><img src="{{ asset('assets/paper/img/laravel.svg') }}"></i>

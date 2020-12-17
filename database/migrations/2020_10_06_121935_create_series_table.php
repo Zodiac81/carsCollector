@@ -18,7 +18,7 @@ class CreateSeriesTable extends Migration
             $table->string('name', 255);
             $table->string('reference', 255);
             $table->string('line',255)->default('main');
-            $table->year('release')->nullable();
+            $table->year('released')->nullable();
             $table->year('finished')->nullable();
             $table->longText('description')->nullable();
             $table->integer('position')->nullable();

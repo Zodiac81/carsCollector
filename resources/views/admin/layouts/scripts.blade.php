@@ -1,7 +1,9 @@
 <!--   Core JS Files   -->
+<script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/paper/js/core/popper.min.js') }}"></script>
 <script src="{{ asset('assets/paper/js/core/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/paper/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script><script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/paper/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+
 <!-- Chart JS -->
 <script src="{{ asset('assets/paper/js/plugins/chartjs.min.js') }}"></script>
 {{--<!--  Notifications Plugin    -->--}}
