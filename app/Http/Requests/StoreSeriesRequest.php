@@ -21,7 +21,7 @@ class StoreSeriesRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'string|required|min:4|max:255',
@@ -36,7 +36,7 @@ class StoreSeriesRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'categories.required' => 'At least one category is required',

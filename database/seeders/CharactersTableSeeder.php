@@ -13,6 +13,6 @@ class CharactersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+
     }
 }

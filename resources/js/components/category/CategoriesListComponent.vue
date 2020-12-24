@@ -82,10 +82,13 @@
                             </b-button>
                         </template>
                         <template #row-details="row">
-                            <b-card>
+                            <b-card>{{row.item}}
                                 <b-row class="mb-2">
                                     <b-col sm="3" class="text-sm-left">
                                         <b>Description :</b> <span v-html="row.item.description"></span>
+                                    </b-col>
+                                    <b-col sm="3" class="text-sm-left">
+                                        <b>Parent category :</b> {{ row.item.category ? row.item.category.name : " " }}
                                     </b-col>
                                 </b-row>
                             </b-card>
@@ -233,6 +236,7 @@ export default {
         updateItem(item) {
             this.categories = this.categories.map(function (i) {
                 if (i.id === item.id) {
+                    console.log(item)
                     return item
                 }
                 return i

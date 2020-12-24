@@ -24,7 +24,7 @@ class SeriesResource extends JsonResource
             'description' => $this->description,
             'position' => $this->position ?? null,
             'parent_id' => $this->parent_id ?? null,
-            'categories' => new  CategoryCollection($this->categories)
+            'categories' => new CategoryCollection($this->categories)
         ];
     }
 }

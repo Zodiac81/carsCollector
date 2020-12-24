@@ -26,6 +26,7 @@ class CategoryRequest extends FormRequest
         return [
             'name' => 'string|required|min:4|max:255',
             'description' => 'nullable|max:1000|string',
+            'parent_id' => 'nullable'
         ];
     }
 

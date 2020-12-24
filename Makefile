@@ -20,3 +20,7 @@ seed:
 	@docker-compose exec php php artisan db:seed
 test:
 	docker-compose exec php php artisan test
+composer-dump:
+	docker-compose exec php composer dump-auto
+tinker:
+	docker-compose exec php php artisan tinker

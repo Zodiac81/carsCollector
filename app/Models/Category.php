@@ -30,5 +30,13 @@ class Category extends Model
     {
         return $this->belongsToMany(Category::class, 'categories_series','category_id', 'series_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function category()
+    {
+        return $this->hasOne(self::class, 'id', 'parent_id');
+    }
 }
 

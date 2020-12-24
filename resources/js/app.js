@@ -12,6 +12,7 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import Vuelidate from 'vuelidate'
 
+import store from './store/index'
 
 // Install BootstrapVue
 Vue.use(BootstrapVue)
@@ -19,7 +20,6 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(CKEditor)
 Vue.use(Vuelidate)
-
 
 /**
  * The following block of code may be used to automatically register your
@@ -47,5 +47,6 @@ Vue.component('category-form-component', require('./components/forms/CategoryFor
  */
 
 const app = new Vue({
+    store,
     el: '#app',
 });

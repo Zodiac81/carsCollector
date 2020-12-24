@@ -35,7 +35,7 @@ class SeriesRepository implements ISeries
         }
 
         $createdItem =  Series::create($data);
-        $createdItem->categories()->attach($data['categories']);
+        $createdItem->categories()->attach($data['categories']);  //ids of categories
         return new SeriesResource($createdItem);
     }
 
@@ -46,6 +46,7 @@ class SeriesRepository implements ISeries
      */
     public function editItem(array $data, Series $series) :SeriesResource
     {
+
         $series->update($data);
         $series->categories()->sync($data['categories']);
         return new SeriesResource($series);

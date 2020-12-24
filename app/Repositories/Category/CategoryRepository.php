@@ -16,7 +16,7 @@ class CategoryRepository implements ICategory
     public function getAll()
     {
         return response()->json(['data' => Category::orderBy('name', 'asc')
-            ->with('series')
+            ->with(['series', 'category'])
             ->get()]
         );
     }
@@ -32,12 +32,14 @@ class CategoryRepository implements ICategory
      */
     public function saveItem(array $itemData): CategoryResource
     {
+
         $createdItem =  Category::create($itemData);
         return new CategoryResource($createdItem);
     }
 
     public function editItem(array $itemData, Category $item)
     {
+
         $item->update($itemData);
         return new CategoryResource($item);
     }

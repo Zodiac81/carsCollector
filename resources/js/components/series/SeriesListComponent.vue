@@ -2,17 +2,17 @@
     <div class="col-md-12">
         <!--Alert-->
         <alert-component
-            :dismissCountDown="alert.dismissCountDown"
-            :variant=alert.variant
-            :message="alert.message"
-            @dismisse="alert.dismissCountDown=0">
+            :dismissCountDown="ALERT.dismissCountDown"
+            :variant=ALERT.variant
+            :message="ALERT.message"
+            @dismisse="ALERT.dismissCountDown=0">
         </alert-component>
         <!--Table-->
-        <div class="card w-75">
+        <div class="card w-100">
             <div class="card-header d-flex justify-content-md-between">
                 <h4 class="card-title">Series</h4>
                 <div class="d-flex justify-content-end">
-                    <b-button @click="$bvModal.show(infoCreateModal.id)" variant="success">
+                    <b-button @click="$bvModal.show(modal.create.id)" variant="success">
                         <i class="nc-icon nc-simple-add"></i>
                     </b-button>
                 </div>
@@ -36,7 +36,7 @@
                                         id="perPageSelect"
                                         size="sm"
                                         class="w-50"
-                                        :options="pageOptions"
+                                        :options="PAGE_OPTIONS"
                                     ></b-form-select>
                                 </b-form-group>
                             </b-col>
@@ -64,7 +64,7 @@
                 <div class="table">
                     <b-table
                         id="series-table"
-                        :items="series"
+                        :items="ALL_SERIES"
                         :per-page="perPage"
                         :current-page="currentPage"
                         :fields="fields"
@@ -86,47 +86,50 @@
                         <template #row-details="row">
                             <series-details-component :series-data="row.item"></series-details-component>
                         </template>
-//UPDATE
+
                         <template #cell(actions)="row">
-                            <b-button @click="$bvModal.show(infoUpdateModal.id + row.item.id)" variant="info"
+                            <!--UPDATE-->
+                            <b-button @click="$bvModal.show(modal.update.id + row.item.id)" variant="info"
                                       class="btn-sm">
                                 <i class="nc-icon nc-settings"></i>
                             </b-button>
                             <b-modal
-                                :id="infoUpdateModal.id + row.item.id"
-                                :title="infoUpdateModal.title"
+                                :id="modal.update.id + row.item.id"
+                                :title="modal.update.title"
                                 hide-footer
                                 size="lg">
-
-                                <series-form-component :id="infoUpdateModal.id + row.item.id" :data=row.item :edit=true
-                                                       @action="updateItem" @alert="showAlert"></series-form-component>
+                                <series-form-component
+                                    :id="modal.update.id + row.item.id"
+                                    :data=row.item
+                                    :edit=true>
+                                </series-form-component>
                             </b-modal>
-                            <b-button @click="$bvModal.show(infoDeleteModal.id + row.item.id)" variant="danger"
+                            <!--DELETE-->
+                            <b-button @click="$bvModal.show(modal.delete.id + row.item.id)" variant="danger"
                                       class="btn-sm">
                                 <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
                             </b-button>
                             <b-modal
-                                :id="infoDeleteModal.id + row.item.id"
+                                :id="modal.delete.id + row.item.id"
                                 header-class="border-bottom-0"
                                 footer-class="border-top-0"
                                 size="md"
-                                @ok="deleteItem(row.item.id)"
+                                @ok="DELETE_SERIES(row.item.id)"
                             >
                                 <template>
                                     <h6 class="text-center">{{
-                                            infoDeleteModal.title + '"' + row.item.name + '"' + ' ?'
+                                            modal.delete.title + '"' + row.item.name + '"' + ' ?'
                                         }}</h6>
                                 </template>
-
                             </b-modal>
                         </template>
                     </b-table>
                     <div class="d-flex justify-content-between">
-                        <b>Total : {{ series.length }}</b>
+                        <b>Total : {{ TOTAL_SERIES_COUNT }}</b>
                         <!--Pagination-->
                         <b-pagination
                             v-model="currentPage"
-                            :total-rows="totalRows"
+                            :total-rows="TOTAL_ROWS"
                             :per-page="perPage"
                             aria-controls="series-table"
                             align="right"
@@ -137,26 +140,33 @@
 
             </div>
         </div>
-        <!-- Modals -->
-        <b-modal
-            :id="infoCreateModal.id"
-            :title="infoCreateModal.title"
-            hide-footer
-            size="lg">
-            <series-form-component :id="infoCreateModal.id" :edit=false :data={} @action="setItem"
-                                   @alert="showAlert"></series-form-component>
-        </b-modal>
+<!--         Modals-->
+                <b-modal
+                    :id="modal.create.id"
+                    :title="modal.create.title"
+                    hide-footer
+                    size="lg">
+                    <series-form-component
+                        :id="modal.create.id"
+                        :edit=false
+                        :data={}>
+                    </series-form-component>
+                </b-modal>
     </div>
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
+    async mounted() {
+        await this.FETCH_SERIES()
+    },
     data() {
         return {
-            series: [],
             perPage: 10,
             currentPage: 1,
-            totalRows: 1,
+            pageOptions: [5, 10, 15, 20],
             fields: [
                 {
                     key: 'name',
@@ -195,91 +205,49 @@ export default {
 
                 }
             ],
-            pageOptions: [5, 10, 15, 20],
             sortBy: 'line',
             sortDesc: true,
             filter: null,
             filterOn: [],
-            infoCreateModal: {
-                id: 'create-modal',
-                title: 'Add new series',
-                btnTitle: 'Create',
-            },
-            infoUpdateModal: {
-                id: 'update-modal',
-                title: 'Update series',
-                btnTitle: 'Update',
-            },
-            infoDeleteModal: {
-                id: 'delete-modal-',
-                title: 'Delete ',
-            },
-            alert: {
-                variant: '',
-                message: '',
-                dismissSecs: 5,
-                dismissCountDown: 0,
+            modal: {
+                create: {
+                    id: 'create-modal',
+                    title: 'Add new series',
+                    btnTitle: 'Create',
+                },
+                update: {
+                    id: 'update-modal-',
+                    title: 'Update series',
+                    btnTitle: 'Update',
+                },
+                delete: {
+                    id: 'delete-modal-',
+                    title: 'Delete ',
+                }
             }
         }
     },
     computed: {
-
-        // rows() {
-        //     return this.series.length
-        // }
-    },
-    mounted() {
-        axios.get('api/v1/series').then((response) => {
-            this.series = response.data.data
-            this.totalRows = this.series.length
-        }).catch(error => {
-            console.log(error)
-        })
+        ...mapGetters([
+            'ALL_SERIES',
+            'TOTAL_ROWS',
+            'ALERT',
+            'TOTAL_SERIES_COUNT',
+            'FILTER',
+            'FILTER_ON',
+            'PAGE_OPTIONS',
+            'PER_PAGE',
+            'CURRENT_PAGE',
+            'SORT_BY',
+            'SORT_DESC'
+        ])
     },
     methods: {
-        setItem(item) {
-            this.series.push(item)
-        },
-        updateItem(item) {
-            this.series = this.series.map(function (i) {
-                if (i.id === item.id) {
-                    return item
-                }
-                return i
-            })
-        },
-        deleteItem(id) {
-            axios.delete('api/v1/series/' + id)
-                .then(response => {
-                    this.series = this.series.filter(function (item) {
-                        return item.id !== response.data.data
-                    })
-                    this.totalRows = this.series.length
-                    this.showAlert(response.statusText, response.data.msg)
-                }).catch(error => {
-                console.log('Error : ', error)
-            })
-        },
+        ...mapActions(['FETCH_SERIES', 'DELETE_SERIES', 'TOTAL_ROWS_AFTER_FILTER', 'CHANGE_PER_PAGE']),
         onFiltered(filteredItems) {
-            this.totalRows = filteredItems.length
-            this.currentPage = 1
-        },
-        showAlert(status, msg) {
-            console.log(status, msg)
-            const successStatusesArr = [
-                'Created', 'OK',
-            ]
-
-            this.alert.dismissCountDown = this.alert.dismissSecs
-            if(successStatusesArr.includes(status)) {
-                this.alert.variant = 'success'
-                this.alert.message = msg
-            } else {
-                this.alert.variant = 'danger'
-                this.alert.message = 'Error!'
-            }
-        },
-
+            this.TOTAL_ROWS_AFTER_FILTER(filteredItems)
+        }
     }
 }
 </script>
+

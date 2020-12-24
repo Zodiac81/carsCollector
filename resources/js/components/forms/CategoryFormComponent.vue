@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{data}}
         <b-form @submit.prevent="submit">
             <div class="w-100">
                 <b-form-group
@@ -20,6 +21,22 @@
                     <div class="text-danger" v-if="!$v.form.name.maxLength">Category name must have no more {{$v.form.name.$params.maxLength.max}} characters.</div>
                 </b-form-group>
                 <b-form-group
+                    id="categories-group"
+                    label="Choose parent category"
+                    label-for="select-categories"
+                >
+                    <multiselect
+                        id="select-categories"
+                        v-model="form.category"
+                        :options="options"
+                        track-by="id"
+                        label="name"
+                        name="parent-category"
+                        placeholder="Choose"
+                    >
+                    </multiselect>
+                </b-form-group>
+                <b-form-group
                     id="category-description"
                     label="Category description"
                     label-for="cke-editor-description"
@@ -35,21 +52,25 @@
                 </div>
             </div>
         </b-form>
+        {{form.category}}
     </div>
 </template>
 
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import Multiselect from 'vue-multiselect'
 
 export default {
     name: "CategoryFormComponent",
+    components: { Multiselect },
     props: ['id', 'data', 'edit'],
     data() {
         return {
             form: {
                 name: this.data.name || '',  //data from props
-                description: this.data.description || ''
+                description: this.data.description || '',
+                category: this.data.category.name || '',
             },
             cke: {
                 editor: ClassicEditor,
@@ -57,7 +78,8 @@ export default {
             },
             backValidationErrors: '',
             submitStatus: null,
-            isEdit: this.edit
+            isEdit: this.edit,
+            options:[],
         }
     },
     validations: {
@@ -72,6 +94,14 @@ export default {
             }
         }
     },
+
+    mounted() {
+        axios.get('api/v1/categories').then((response) => {
+            this.options = response.data.data
+        }).catch(error =>{
+            console.log(error)
+        })
+    },
     methods: {
         submit() {
             this.$v.$touch()
@@ -84,7 +114,11 @@ export default {
             }
         },
         create() {
-            axios.post('api/v1/categories', this.form)
+            axios.post('api/v1/categories', {
+                name: this.form.name,
+                description: this.form.description,
+                parent_id: this.form.category.id
+            })
             .then( response => {
                 if(response.status === 201) {
                     this.submitStatus = 'PENDING'
@@ -101,7 +135,11 @@ export default {
             })
         },
         update(id) {
-            axios.put('api/v1/categories/' + id, this.form)
+            axios.put('api/v1/categories/' + id, {
+                name: this.form.name,
+                description: this.form.description,
+                parent_id: this.form.category.id
+            })
                 .then( response => {
                     if(response.status === 200) {
                         this.submitStatus = 'PENDING'

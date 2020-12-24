@@ -55,9 +55,9 @@ class SeriesController extends BaseApiController
      */
     public function update(StoreSeriesRequest $request, Series $series): JsonResponse
     {
-        $updateItem = $this->repository->editItem($request->validated(), $series);
-        return $updateItem ?
-            $this->success('Successfully updated', $updateItem, Response::HTTP_OK) :
+        $updatedItem = $this->repository->editItem($request->validated(), $series);
+        return $updatedItem ?
+            $this->success('Successfully updated', $updatedItem, Response::HTTP_OK) :
             $this->error();
     }
 
